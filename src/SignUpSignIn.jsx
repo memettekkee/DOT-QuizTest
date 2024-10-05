@@ -31,7 +31,7 @@ function SignUpSignIn() {
             localStorage.setItem("username", username.current.value)
             localStorage.setItem("password", password.current.value)
             localStorage.setItem("signUp", username.current.value)
-            alert("Akun telah dibuat :)")
+            alert("Account created successfully !")
             window.location.reload()
         }
     }
@@ -41,49 +41,54 @@ function SignUpSignIn() {
             localStorage.setItem("signUp", username.current.value)
             window.location.reload()
         } else {
-            alert("Username atau Password salah!!!")
+            alert("Wrong username or password !")
         }
+    }
+
+    const deleteAccount = () => {
+        localStorage.clear()
+        window.location.reload()
     }
 
     return (
         <div>
             {showHome ? <QuizApp /> :
                 (show ?
-                    <div className=''>
-                        <div className=''>
-                            Quiz Test
+                    <div className='flex flex-col p-24 w-full min-h-screen bg-gradient-to-t from-[#2C3E50] to-[#4CA1AF] text-center font-poppins text-white items-center'>
+                        <div className='text-[10vh] font-nunito font-bold'>
+                            It's Qui<span className='text-[#7EC5DB]'>zz</span>os
                         </div>
-                        <h1>
-                            Haiii, {localName}
-                        </h1>
-                        <div className=''>
-                            <label class="">Username</label>
-                            <input type="username" class="" placeholder="Username" ref={username} />
+                        <h1 className='pt-5 font-medium text-[3vh]'>{localName}</h1>
+                        <div className='pt-5 flex flex-col gap-6 w-[70%] items-center'>
+                            <div className='w-[40%]'>
+                                <input type="username" class="text-white placeholder-[#D9D9D9] p-4 bg-transparent shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg border-l border-l-[rgba(0,0,0,0.50)] border-b border-b-[rgba(0,0,0,0.50)] border-solid w-full focus:outline-none" placeholder="Username" ref={username} />
+                            </div>
+                            <div className='w-[40%]'>
+                                <input type="password" class="text-white placeholder-[#D9D9D9] p-4 bg-transparent shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg border-l border-l-[rgba(0,0,0,0.50)] border-b border-b-[rgba(0,0,0,0.50)] border-solid w-full focus:outline-none" placeholder="Password" ref={password} />
+                            </div>
+                            <div className='w-[40%] justify-between flex mt-[4vh]'>
+                                <button onClick={handleSignIn} className='w-[30%] p-4 bg-gradient-to-r from-[rgba(52,73,94,0.75)] via-[rgba(109,213,250,0.50)] to-[rgba(52,73,94,0.75)] shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gradient-to-l'>Sign In</button>
+                                <button onClick={deleteAccount} className='w-[60%] p-4 bg-gradient-to-r from-[rgba(52,73,94,0.75)] via-[rgba(109,213,250,0.50)] to-[rgba(52,73,94,0.75)] shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gradient-to-l'>Other Account</button>
+                            </div>
                         </div>
-                        <div className=' '>
-                            <label class="">Password</label>
-                            <input type="password" class="" placeholder="Password" ref={password} />
-                        </div>
-                        <button onClick={handleSignIn}>Sign In</button>
                     </div>
                     :
-                    <div className='container'>
-                        <div className=''>
-                            Quiz Test
+                    <div className='flex flex-col p-24 w-full min-h-screen bg-gradient-to-t from-[#2C3E50] to-[#4CA1AF] text-center font-poppins text-white items-center'>
+                        <div className='text-[10vh] font-nunito font-bold'>
+                            It's Qui<span className='text-[#7EC5DB]'>zz</span>os
                         </div>
-                        <div className=''>
-                            <label class="">Nama</label>
-                            <input type="name" class="" placeholder="Nama" ref={name} />
+                        <div className='pt-9 flex flex-col gap-6 w-[70%] items-center'>
+                            <div className='w-[40%]'>
+                                <input type="name" class="text-white placeholder-[#D9D9D9] p-4 bg-transparent shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg border-l border-l-[rgba(0,0,0,0.50)] border-b border-b-[rgba(0,0,0,0.50)] border-solid w-full focus:outline-none " placeholder="Insert Name" ref={name} />
+                            </div>
+                            <div className='w-[40%]'>
+                                <input type="username" class="text-white placeholder-[#D9D9D9] p-4 bg-transparent shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg border-l border-l-[rgba(0,0,0,0.50)] border-b border-b-[rgba(0,0,0,0.50)] border-solid w-full focus:outline-none" placeholder="Insert Username" ref={username} />
+                            </div>
+                            <div className='w-[40%]'>
+                                <input type="password" class="text-white placeholder-[#D9D9D9] p-4 bg-transparent shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg border-l border-l-[rgba(0,0,0,0.50)] border-b border-b-[rgba(0,0,0,0.50)] border-solid w-full focus:outline-none" placeholder="Insert Password" ref={password} />
+                            </div>
+                            <button className='mt-[5vh] w-[40%] p-4 bg-gradient-to-r from-[rgba(52,73,94,0.75)] via-[rgba(109,213,250,0.50)] to-[rgba(52,73,94,0.75)] shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gradient-to-l' onClick={handleSignUp}>Sign Up</button>
                         </div>
-                        <div className=''>
-                            <label class="">Username</label>
-                            <input type="username" class="" placeholder="Username" ref={username} />
-                        </div>
-                        <div className=' '>
-                            <label class="">Password</label>
-                            <input type="password" class="" placeholder="Password" ref={password} />
-                        </div>
-                        <button onClick={handleSignUp}>Sign Up</button>
                     </div>)}
         </div>
 

@@ -29,25 +29,30 @@ function QuizApp() {
         localStorage.removeItem("signUp")
         window.location.reload()
     }
-    const deleteAccount = () => {
-        localStorage.clear()
-        window.location.reload()
-    }
 
     return (
-        <div>
-            <h1>Welcome to the Quiz</h1>
-            <h2>Gas ga nih {localStorage.getItem('name')} ???</h2>
-            {isQuizStarted ? (
-                <Quiz questions={questions} timeLimit={120} onQuizEnd={handleQuizEnd} />
-            ) : (
-                <button onClick={() => setIsQuizStarted(true)}>Start Quiz</button>
-            )}
-            <div className=''>
-                <button onClick={logout} className=''>Log Out</button>
-                <button onClick={deleteAccount} className=''>Delete</button>
+        <div className='w-full min-h-screen bg-gradient-to-t from-[#2C3E50] to-[#4CA1AF] text-white '>
+            <div className='flex items-center justify-between w-full px-3 py-2'>
+                <div className='text-[5vh] font-nunito font-bold'>
+                    It's Qui<span className='text-[#7EC5DB]'>zz</span>os
+                </div>
+                <button onClick={logout} className='px-5 mb-3 font-medium'>Log Out</button>
+            </div>
+            <div className='flex flex-col items-center w-full p-24 text-center font-poppins'>
+                {/* <h1>Welcome to the Quiz</h1>
+                <h2>Gas ga nih {localStorage.getItem('name')} ???</h2> */}
+                {isQuizStarted ? (
+                    <Quiz questions={questions} timeLimit={120} onQuizEnd={handleQuizEnd} />
+                ) : (
+                    
+                    <button onClick={() => setIsQuizStarted(true)}>Start Quiz</button>
+                )}
+                <div className=''>
+                    
+                </div>
             </div>
         </div>
+
     )
 }
 
