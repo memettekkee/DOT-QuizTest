@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
-
 function Quiz({ questions, timeLimit, onQuizEnd }) {
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [timer, setTimer] = useState(timeLimit);
     const [answers, setAnswers] = useState([]);
-    const [quizEnded, setQuizEnded] = useState(false);  // New state for handling end
+    const [quizEnded, setQuizEnded] = useState(false);
 
-    // Load data from local storage for resuming quiz
     useEffect(() => {
         const savedState = JSON.parse(localStorage.getItem('quizState'));
         if (savedState) {
@@ -19,7 +17,6 @@ function Quiz({ questions, timeLimit, onQuizEnd }) {
         }
     }, []);
 
-    // Save quiz state in local storage for resuming if browser closes
     useEffect(() => {
         localStorage.setItem('quizState', JSON.stringify({
             currentQuestionIndex,
@@ -29,23 +26,21 @@ function Quiz({ questions, timeLimit, onQuizEnd }) {
         }));
     }, [currentQuestionIndex, score, timer, answers]);
 
-    // Timer countdown
     useEffect(() => {
         const countdown = setInterval(() => {
             if (timer > 0) {
                 setTimer(timer - 1);
             } else {
                 clearInterval(countdown);
-                handleQuizEnd();  // Handle quiz end if timer reaches 0
+                handleQuizEnd();
             }
         }, 1000);
 
         return () => clearInterval(countdown);
     }, [timer]);
 
-    // Move logic to handle quiz end
     const handleQuizEnd = () => {
-        setQuizEnded(true);  // Trigger the quiz to end
+        setQuizEnded(true);
         onQuizEnd({
             score,
             totalQuestions: questions.length,
@@ -61,38 +56,64 @@ function Quiz({ questions, timeLimit, onQuizEnd }) {
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         } else {
-            handleQuizEnd();  // End quiz when all questions are answered
+            handleQuizEnd();
         }
     };
 
-    // If quiz has ended, display result
+    const handleTryAgain = () => {
+        setCurrentQuestionIndex(0);
+        setScore(0);
+        setTimer(timeLimit);
+        setAnswers([]);
+        setQuizEnded(false);
+    };
+
     if (quizEnded) {
         return (
-            <div>
-                <h2>Quiz ended</h2>
-                <p>Your score: {score}</p>
-                <p>Questions answered: {answers.length}/{questions.length}</p>
-                <p>Correct answers: {score}</p>
-                <p>Incorrect answers: {answers.length - score}</p>
+            <div className='pt-[5vh] px-3 sm:px-6 md:px-12'>
+                {score >= 8 ? (
+                    <p className='text-[5vh] sm:text-[6vh] md:text-[7vh] font-bold'>
+                        Bingo!, you've got <span className='text-[#32CD32]'>{score * 10}</span> points, Congratulations
+                    </p>
+                ) : (
+                    <p className='text-[5vh] sm:text-[6vh] md:text-[7vh] font-bold'>
+                        Oops your points is <span className='text-[#FF2D00]'>{score * 10}</span>. Try again!
+                    </p>
+                )}
+                <p className='text-[3vh] sm:text-[3.5vh] md:text-[4vh] pt-[5vh]'>{answers.length}/{questions.length} Questions Answered</p>
+                <div className='flex justify-center gap-x-6 sm:gap-x-10 pt-[4vh] pb-[4vh]'>
+                    <div className='text-[#32CD32] font-semibold'>
+                        <p className='text-[5vh] sm:text-[6vh] md:text-[7vh]'>{score}</p>
+                        <p>Correct</p>
+                    </div>
+                    <div className='text-[#FF2D00] font-semibold'>
+                        <p className='text-[5vh] sm:text-[6vh] md:text-[7vh]'>{answers.length - score}</p>
+                        <p>Incorrect</p>
+                    </div>
+                </div>
+                <button className='p-3 sm:p-4 font-poppins bg-gradient-to-r from-[rgba(52,73,94,0.75)] via-[rgba(109,213,250,0.50)] to-[rgba(52,73,94,0.75)] shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gradient-to-l' onClick={handleTryAgain}>
+                    Try Again?
+                </button>
             </div>
         );
     }
 
     const currentQuestion = questions[currentQuestionIndex];
 
-
     return (
-        <div>
-            <h3>Question {currentQuestionIndex + 1}/{questions.length}</h3>
-            <p>{currentQuestion.question}</p>
-            {currentQuestion.answers.map((answer, index) => (
-                <button key={index} onClick={() => handleAnswer(answer.isCorrect)}>
-                    {answer.text}
-                </button>
-            ))}
-            <p>Time remaining: {timer} seconds</p>
+        <div className='flex flex-col items-center w-full px-3 font-open-sans sm:px-6 md:px-12'>
+            <h3 className='text-[3vh] sm:text-[3.5vh] md:text-[4vh]'>Question {currentQuestionIndex + 1}/{questions.length}</h3>
+            <h1 className='text-[3.5vh] sm:text-[4vh] md:text-[5vh] font-bold pb-[5vh]'>{currentQuestion.question}</h1>
+            <div className='grid grid-cols-2 w-[80%] sm:w-[60%] md:w-[40%] gap-[3vh] sm:gap-[5vh] justify-items-center'>
+                {currentQuestion.answers.map((answer, index) => (
+                    <button className='p-3 sm:p-4 w-full bg-gradient-to-r from-[rgba(52,73,94,0.75)] via-[rgba(109,213,250,0.50)] to-[rgba(52,73,94,0.75)] shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gradient-to-l' key={index} onClick={() => handleAnswer(answer.isCorrect)}>
+                        {answer.text}
+                    </button>
+                ))}
+            </div>
+            <p className='text-[#FF2D00] font-bold py-9 text-[5vh] sm:text-[6vh] md:text-[7vh]'>{timer}s</p>
         </div>
-    )
+    );
 }
 
 export default Quiz

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { CSSTransition } from 'react-transition-group';
 import Quiz from './Quiz'
 
 function QuizApp() {
@@ -15,7 +16,7 @@ function QuizApp() {
                     answers: [
                         ...q.incorrect_answers.map(ans => ({ text: ans, isCorrect: false })),
                         { text: q.correct_answer, isCorrect: true },
-                    ].sort(() => Math.random() - 0.5) // Randomize the order of answers
+                    ].sort(() => Math.random() - 0.5)
                 }));
                 setQuestions(formattedQuestions);
             });
@@ -30,29 +31,40 @@ function QuizApp() {
         window.location.reload()
     }
 
+    const [inProp, setInProp] = useState(false);
+
+    useEffect(() => {
+        setInProp(true);
+    }, []);
+
     return (
-        <div className='w-full min-h-screen bg-gradient-to-t from-[#2C3E50] to-[#4CA1AF] text-white '>
+        <div className='w-full min-h-screen bg-gradient-to-t from-[#2C3E50] to-[#4CA1AF] text-white'>
             <div className='flex items-center justify-between w-full px-3 py-2'>
-                <div className='text-[5vh] font-nunito font-bold'>
-                    It's Qui<span className='text-[#7EC5DB]'>zz</span>os
-                </div>
-                <button onClick={logout} className='px-5 mb-3 font-medium'>Log Out</button>
+                <CSSTransition
+                    in={inProp}
+                    classNames="slide"
+                    timeout={900}
+                    unmountOnExit
+                >
+                    <div className='text-[5vh] sm:text-[6vh] md:text-[7vh] font-nunito font-bold'>
+                        It's Qui<span className='text-[#7EC5DB]'>zz</span>os
+                    </div>
+                </CSSTransition>
+                <button onClick={logout} className='px-3 mb-3 text-sm font-medium sm:px-5 sm:text-base'>Log Out</button>
             </div>
-            <div className='flex flex-col items-center w-full p-24 text-center font-poppins'>
-                {/* <h1>Welcome to the Quiz</h1>
-                <h2>Gas ga nih {localStorage.getItem('name')} ???</h2> */}
+            <div className='flex flex-col items-center w-full pt-6 text-center sm:pt-12 md:pt-24 font-poppins'>
                 {isQuizStarted ? (
-                    <Quiz questions={questions} timeLimit={120} onQuizEnd={handleQuizEnd} />
+                    <Quiz questions={questions} timeLimit={300} onQuizEnd={handleQuizEnd} />
                 ) : (
-                    
-                    <button onClick={() => setIsQuizStarted(true)}>Start Quiz</button>
+                    <div className='p-6 sm:p-10 md:p-20'>
+                        <h1 className='text-[5vh] sm:text-[6vh] md:text-[6.5vh] font-semibold'>
+                            Are you ready <span className='text-[#7EC5DB]'>{localStorage.name}</span> ?
+                        </h1>
+                        <button className='py-3 px-8 sm:py-4 sm:px-10 mt-5 bg-gradient-to-r from-[rgba(52,73,94,0.75)] via-[rgba(109,213,250,0.50)] to-[rgba(52,73,94,0.75)] shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gradient-to-l' onClick={() => setIsQuizStarted(true)}>Start Now !</button>
+                    </div>
                 )}
-                <div className=''>
-                    
-                </div>
             </div>
         </div>
-
     )
 }
 
