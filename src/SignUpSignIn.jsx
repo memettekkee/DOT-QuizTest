@@ -91,7 +91,7 @@ function SignUpSignIn() {
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     className="text-white placeholder-[#D9D9D9] p-4 bg-transparent shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg border-l border-l-[rgba(0,0,0,0.50)] border-b border-b-[rgba(0,0,0,0.50)] border-solid w-full focus:outline-none pr-10"
-                                    placeholder="Insert Password"
+                                    placeholder="Password"
                                     ref={password}
                                 />
                                 <button

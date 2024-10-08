@@ -68,6 +68,15 @@ function Quiz({ questions, timeLimit, onQuizEnd }) {
         setQuizEnded(false);
     };
 
+    if (!questions || questions.length === 0 || currentQuestionIndex >= questions.length) {
+        return (
+            <div>
+                  <p className='text-[5vh] font-semibold'>Loading . . .</p>
+                  <p className='pt-[2vh]'>if it didn't appear, try refresh the page</p>
+            </div>
+        )
+    }
+
     if (quizEnded) {
         return (
             <div className='pt-[5vh] px-3 sm:px-6 md:px-12'>
@@ -117,3 +126,4 @@ function Quiz({ questions, timeLimit, onQuizEnd }) {
 }
 
 export default Quiz
+

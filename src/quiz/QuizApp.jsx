@@ -6,6 +6,7 @@ function QuizApp() {
 
     const [questions, setQuestions] = useState([]);
     const [isQuizStarted, setIsQuizStarted] = useState(false);
+    // const [saves, setSaves] = useState("")
 
     useEffect(() => {
         fetch('https://opentdb.com/api.php?amount=10&type=multiple')
@@ -37,6 +38,29 @@ function QuizApp() {
         setInProp(true);
     }, []);
 
+    useEffect(() => {
+        const savedState = JSON.parse(localStorage.getItem('quizState'));
+        // const savedSession = localStorage.getItem('quizSession');
+        // setSaves(savedSession)
+        // console.log(savedSession)
+        // if (savedState) {
+        //     setIsQuizStarted(savedState.isQuizStarted || false);
+        // }
+        if (savedState && savedState.isQuizStarted) {
+            setIsQuizStarted(true);
+        }
+    }, []);
+
+    const startQuiz = () => {
+        setIsQuizStarted(true);
+        localStorage.setItem('quizState', JSON.stringify({ isQuizStarted: true }));
+        // localStorage.setItem('quizSession', 'active' );
+    };
+
+    // useEffect(() => {
+    //     console.log(saves)
+    // }, [saves]);
+
     return (
         <div className='w-full min-h-screen bg-gradient-to-t from-[#2C3E50] to-[#4CA1AF] text-white'>
             <div className='flex items-center justify-between w-full px-3 py-2'>
@@ -60,7 +84,7 @@ function QuizApp() {
                         <h1 className='text-[5vh] sm:text-[6vh] md:text-[6.5vh] font-semibold'>
                             Are you ready <span className='text-[#7EC5DB]'>{localStorage.name}</span> ?
                         </h1>
-                        <button className='py-3 px-8 sm:py-4 sm:px-10 mt-5 bg-gradient-to-r from-[rgba(52,73,94,0.75)] via-[rgba(109,213,250,0.50)] to-[rgba(52,73,94,0.75)] shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gradient-to-l' onClick={() => setIsQuizStarted(true)}>Start Now !</button>
+                        <button className='py-3 px-8 sm:py-4 sm:px-10 mt-5 bg-gradient-to-r from-[rgba(52,73,94,0.75)] via-[rgba(109,213,250,0.50)] to-[rgba(52,73,94,0.75)] shadow-lg shadow-[rgba(0,0,0,0.25)] rounded-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-gradient-to-l' onClick={startQuiz}>Start Now !</button>
                     </div>
                 )}
             </div>
@@ -69,3 +93,4 @@ function QuizApp() {
 }
 
 export default QuizApp
+
