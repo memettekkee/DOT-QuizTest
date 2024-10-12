@@ -40,9 +40,6 @@ function SignUpSignIn() {
             localStorage.setItem("username", username.current.value)
             localStorage.setItem("password", password.current.value)
             localStorage.setItem("signUp", username.current.value)
-            // alert("Account created successfully !")
-
-            // window.location.reload()
             Swal.fire({
                 title: "Sign Up success !",
                 icon: "success",
@@ -59,7 +56,6 @@ function SignUpSignIn() {
             localStorage.setItem("signUp", username.current.value)
             window.location.reload()
         } else {
-            // alert("Wrong username or password !")
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
