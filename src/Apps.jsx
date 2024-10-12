@@ -4,7 +4,7 @@ import SignUpSignIn from "./sign/SignUpSignIn";
 import Home from "./home/Home";
 import Quiz from "./quiz/Quiz";
 
-function App() {
+function Apps() {
   return (
     <>
       <Router>
@@ -19,4 +19,4 @@ function App() {
   )
 }
 
-export default App
+export default Apps
