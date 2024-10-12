@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { BiShowAlt, BiHide } from 'react-icons/bi'
-import QuizApp from './quiz/QuizApp'
+import { useNavigate } from "react-router-dom";
+import Home from '../home/Home'
 
 function SignUpSignIn() {
 
@@ -12,11 +13,13 @@ function SignUpSignIn() {
     const [showHome, setShowHome] = useState(false)
     const [show, setShow] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
-
+    
     const localSignUp = localStorage.getItem("signUp")
     const localName = localStorage.getItem("name")
     const localUsername = localStorage.getItem("username")
     const localPassword = localStorage.getItem("password")
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (localSignUp) {
@@ -39,6 +42,7 @@ function SignUpSignIn() {
             localStorage.setItem("signUp", username.current.value)
             alert("Account created successfully !")
             window.location.reload()
+            // navigate("/home")
         }
     }
 
@@ -46,6 +50,7 @@ function SignUpSignIn() {
         if (username.current.value == localUsername && password.current.value == localPassword) {
             localStorage.setItem("signUp", username.current.value)
             window.location.reload()
+            // navigate("/home")
         } else {
             alert("Wrong username or password !")
         }
@@ -64,7 +69,7 @@ function SignUpSignIn() {
 
     return (
         <div>
-            {showHome ? <QuizApp /> :
+            {showHome ? navigate("/home") :
                 (show ? (
                     <div className='flex flex-col p-6 sm:p-12 md:p-16 lg:p-24 w-full min-h-screen bg-gradient-to-t from-[#2C3E50] to-[#4CA1AF] text-center font-poppins text-white items-center'>
                         <CSSTransition
