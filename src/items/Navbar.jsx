@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { CSSTransition } from 'react-transition-group';
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 function Navbar() {
 
@@ -10,10 +11,23 @@ function Navbar() {
     useEffect(() => {
         setInProp(true);
     }, []);
-    
+
     const logout = () => {
-        localStorage.removeItem("signUp")
-        navigate("/login")
+        Swal.fire({
+            title: "You sure wanna Log Out ?",
+            showCancelButton: true,
+            confirmButtonText: "Log Out",
+            customClass: {
+                confirmButton: 'red-button',  
+                cancelButton: 'cancel-button'     
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem("signUp")
+                localStorage.removeItem("quizState")
+                navigate("/login")
+            } else { }
+        });
     }
 
     return (

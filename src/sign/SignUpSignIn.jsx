@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { BiShowAlt, BiHide } from 'react-icons/bi'
 import { useNavigate } from "react-router-dom";
-import Home from '../home/Home'
+import Swal from 'sweetalert2';
 
 function SignUpSignIn() {
 
@@ -40,9 +40,17 @@ function SignUpSignIn() {
             localStorage.setItem("username", username.current.value)
             localStorage.setItem("password", password.current.value)
             localStorage.setItem("signUp", username.current.value)
-            alert("Account created successfully !")
-            window.location.reload()
-            // navigate("/home")
+            // alert("Account created successfully !")
+
+            // window.location.reload()
+            Swal.fire({
+                title: "Sign Up success !",
+                icon: "success",
+                customClass: {
+                    confirmButton: 'green-button'
+                }
+              });
+            navigate("/home")
         }
     }
 
@@ -50,9 +58,13 @@ function SignUpSignIn() {
         if (username.current.value == localUsername && password.current.value == localPassword) {
             localStorage.setItem("signUp", username.current.value)
             window.location.reload()
-            // navigate("/home")
         } else {
-            alert("Wrong username or password !")
+            // alert("Wrong username or password !")
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Wrong username or password !"
+              });
         }
     }
 

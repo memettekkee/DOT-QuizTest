@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../items/Navbar';
 import Result from './Result';
-import { Link } from 'react-router-dom';
 function Quiz() {
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -12,7 +11,8 @@ function Quiz() {
     const [questions, setQuestions] = useState([]);
 
     const catchData = async () => {
-        fetch('https://opentdb.com/api.php?amount=10&type=multiple')
+        const API_URL = import.meta.env.VITE_REACT_API_URL;
+        fetch(`${API_URL}`)
             .then(response => response.json())
             .then(data => {
                 const formattedQuestions = data.results.map((q) => ({

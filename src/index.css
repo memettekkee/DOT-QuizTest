@@ -35,3 +35,15 @@
   @apply transition-transform duration-500 ease-in-out transform translate-x-full; 
 }
 
+.red-button {
+  @apply px-4 py-2 font-semibold text-white bg-red-500 rounded-lg; 
+}
+
+.green-button {
+  @apply px-4 py-2 font-semibold text-white bg-green-500 rounded-lg; 
+}
+
+.cancel-button {
+  @apply px-4 py-2 font-semibold text-white bg-gray-500 rounded-lg;
+}
+
